@@ -29,7 +29,7 @@ module "workload1" {
 
   providers = {
     aws = aws.workload1_euw1
-    aws.aws_use1 = aws.workload1_use1
+    aws.workload1_use1 = aws.workload1_use1
   }
 
   logging_bucket_arn  = module.logging.logging_bucket_arn
@@ -51,7 +51,6 @@ module "logging" {
 
   providers = {
     aws = aws.logging_euw1
-    aws.aws_use1 = aws.logging_use1
     aws.workload1_use1 = aws.workload1_use1
   }
 

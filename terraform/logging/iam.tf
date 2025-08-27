@@ -1,5 +1,4 @@
 resource "aws_iam_role" "firehose_delivery" {
-  provider = aws.aws_use1
   name     = "firehose-delivery-role-cloudfront-central"
 
   assume_role_policy = jsonencode({
@@ -13,7 +12,6 @@ resource "aws_iam_role" "firehose_delivery" {
 }
 
 resource "aws_iam_role_policy" "firehose_delivery" {
-  provider = aws.aws_use1
   name     = "firehose-delivery-policy-cloudfront-central"
   role     = aws_iam_role.firehose_delivery.id
 

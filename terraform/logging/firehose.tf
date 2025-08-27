@@ -3,7 +3,6 @@ data "aws_partition" "current" {}
 data "aws_region" "current" {}
 
 resource "aws_kinesis_firehose_delivery_stream" "cloudfront_realtime_logs" {
-  provider   = aws.aws_use1
   name       = "cloudfront-realtime-logs-to-s3-central"
   destination = "extended_s3"
 

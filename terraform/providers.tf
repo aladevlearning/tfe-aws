@@ -3,11 +3,6 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-provider "aws" {
-  alias = "aws_use1"
-  region = "us-east-1"
-}
-
 # Alias provider = assumes into workload account B
 provider "aws" {
   alias  = "workload1_euw1"
