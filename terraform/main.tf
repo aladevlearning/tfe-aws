@@ -35,3 +35,11 @@ module "security" {
     aws.security_use1 = aws.security_use1
   }
 }
+
+module "logging" {
+  source       = "./logging"
+
+  providers = {
+    aws = aws.logging_euw1
+  }
+}

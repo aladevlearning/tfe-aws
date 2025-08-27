@@ -35,3 +35,12 @@ provider "aws" {
     role_arn = var.iam_role_security_tf_deployer_arn
   }
 }
+
+provider "aws" {
+  alias  = "logging_euw1"
+  region = "eu-west-1"
+
+  assume_role {
+    role_arn = var.iam_role_logging_tf_deployer_arn
+  }
+}
