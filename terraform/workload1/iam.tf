@@ -1,4 +1,5 @@
 data "aws_partition" "current" {}
+data "aws_region" "current" {}
 
 resource "aws_iam_role" "firehose_delivery" {
   name     = "firehose-delivery-role-cloudfront"
@@ -35,8 +36,8 @@ resource "aws_iam_role_policy" "firehose_delivery" {
       {
         Sid: "LogsForDiagnostics",
         Effect: "Allow",
-        Action: ["logs:PutLogEvents"],
-        Resource: "arn:${data.aws_partition.current.partition}:logs:us-east-1:*:log-group:/aws/kinesisfirehose/*:log-stream:*"
+        Action: ["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],
+        Resource: "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:*:log-group:/aws/kinesisfirehose/*:log-stream:*"
       }
     ]
   })
