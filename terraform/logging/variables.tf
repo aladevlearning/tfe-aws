@@ -5,6 +5,11 @@ variable "cloudfront_realtime_kinesis_stream_arn" {
   default     = ""
 }
 
+variable "cloudfront_kinesis_source_role_arn" {
+  description = "ARN of IAM role in the workload account that Firehose assumes to read from the Kinesis stream"
+  type        = string
+}
+
 variable "create_cloudfront_realtime_kinesis_stream" {
   description = "If true and no ARN provided, create a Kinesis Data Stream for CloudFront real-time logs"
   type        = bool

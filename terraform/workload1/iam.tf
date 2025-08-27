@@ -43,3 +43,44 @@ resource "aws_iam_role_policy" "firehose_delivery" {
 }
 
 
+# Cross-account source role that centralized Firehose (in logging account) assumes to read the stream
+resource "aws_iam_role" "firehose_source" {
+  name = "firehose-source-role-cloudfront"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = { Service = "firehose.amazonaws.com" },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "firehose_source" {
+  name = "firehose-source-policy-cloudfront"
+  role = aws_iam_role.firehose_source.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid: "AllowReadFromKinesisStream",
+        Effect: "Allow",
+        Action: [
+          "kinesis:DescribeStream",
+          "kinesis:DescribeStreamSummary",
+          "kinesis:GetRecords",
+          "kinesis:GetShardIterator",
+          "kinesis:ListShards",
+          "kinesis:SubscribeToShard"
+        ],
+        Resource: aws_kinesis_stream.cloudfront_realtime.arn
+      }
+    ]
+  })
+}
+
+

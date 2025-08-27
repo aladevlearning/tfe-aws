@@ -1,10 +1,10 @@
 resource "aws_kinesis_firehose_delivery_stream" "cloudfront_realtime_logs" {
-  name       = "cloudfront-realtime-logs-to-s3-central"
+  name        = "cloudfront-realtime-logs-to-s3-central"
   destination = "extended_s3"
 
   kinesis_source_configuration {
     kinesis_stream_arn = var.cloudfront_realtime_kinesis_stream_arn
-    role_arn           = aws_iam_role.firehose_delivery.arn
+    role_arn           = var.cloudfront_kinesis_source_role_arn
   }
 
   extended_s3_configuration {

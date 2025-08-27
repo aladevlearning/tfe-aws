@@ -23,12 +23,6 @@ resource "aws_iam_role_policy" "firehose_delivery" {
         Effect: "Allow",
         Action: ["s3:AbortMultipartUpload","s3:GetBucketLocation","s3:GetObject","s3:ListBucket","s3:ListBucketMultipartUploads","s3:PutObject"],
         Resource: [aws_s3_bucket.logging.arn, "${aws_s3_bucket.logging.arn}/*"]
-      },
-      {
-        Sid: "KinesisAccessCrossAccount",
-        Effect: "Allow",
-        Action: ["kinesis:DescribeStream","kinesis:DescribeStreamSummary","kinesis:GetRecords","kinesis:GetShardIterator","kinesis:ListShards","kinesis:SubscribeToShard"],
-        Resource: var.cloudfront_realtime_kinesis_stream_arn
       }
     ]
   })
