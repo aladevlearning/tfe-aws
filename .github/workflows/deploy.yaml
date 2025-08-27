@@ -2,7 +2,7 @@ name: Terraform
 
 on:
   push:
-    branches: [ "feature/enteprise-logging" ]
+    branches: [ "feature/enterprise-logging" ]
 
 jobs:
   terraform:
