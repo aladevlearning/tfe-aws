@@ -10,6 +10,11 @@ variable "cloudfront_kinesis_source_role_arn" {
   type        = string
 }
 
+variable "workload1_firehose_delivery_stream_arn" {
+  description = "ARN of the Firehose delivery stream in the workload account that writes to the logging bucket"
+  type        = string
+}
+
 variable "create_cloudfront_realtime_kinesis_stream" {
   description = "If true and no ARN provided, create a Kinesis Data Stream for CloudFront real-time logs"
   type        = bool

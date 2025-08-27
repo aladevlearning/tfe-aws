@@ -58,4 +58,5 @@ module "logging" {
   security_account_id  = var.security_account_id
   cloudfront_realtime_kinesis_stream_arn = module.workload1.cloudfront_realtime_kinesis_stream_arn
   cloudfront_kinesis_source_role_arn      = module.workload1.cloudfront_kinesis_source_role_arn
+  workload1_firehose_delivery_stream_arn  = module.workload1.cloudfront_firehose_delivery_stream_arn
 }

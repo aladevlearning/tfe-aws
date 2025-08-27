@@ -49,7 +49,7 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
             "aws:SourceAccount": [var.workload1_account_id, var.security_account_id]
           },
           ArnLike: {
-            "aws:SourceArn": module.workload1.cloudfront_firehose_delivery_stream_arn
+            "aws:SourceArn": var.workload1_firehose_delivery_stream_arn
           }
         }
       }
