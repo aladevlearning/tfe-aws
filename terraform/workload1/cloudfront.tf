@@ -27,6 +27,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id       = "S3-${aws_s3_bucket.content.id}"
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
+    realtime_log_config_arn = aws_cloudfront_realtime_log_config.cf_realtime_logs.arn
 
     forwarded_values {
       query_string = false
@@ -48,6 +49,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id       = "S3-${aws_s3_bucket.content.id}"
     compress               = true
     viewer_protocol_policy = "https-only"
+    realtime_log_config_arn = aws_cloudfront_realtime_log_config.cf_realtime_logs.arn
 
     forwarded_values {
       query_string = true
@@ -91,6 +93,20 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     Name        = "CloudFront-${aws_s3_bucket.content.id}"
     Environment = "Dev"
     "FMSProtected" = "true"
+  }
+}
+
+resource "aws_cloudfront_realtime_log_config" "cf_realtime_logs" {
+  name          = "cf-realtime-logs"
+  sampling_rate = 100
+  fields        = ["timestamp","c-ip","time-to-first-byte","sc-status","sc-bytes","cs-method","cs-protocol","cs-host","cs-uri-stem","cs-bytes","x-edge-location","x-edge-result-type","x-edge-request-id","x-edge-detailed-result-type","ssl-protocol","ssl-cipher","x-edge-response-result-type","fle-encrypted-fields","fle-status","c-port","time-taken","x-forwarded-for","cs-cookie","cs-user-agent","cs-referer","cs-uri-query"]
+
+  endpoint {
+    stream_type = "Kinesis"
+    kinesis_stream_config {
+      role_arn   = aws_iam_role.firehose_delivery.arn
+      stream_arn = aws_kinesis_stream.cloudfront_realtime.arn
+    }
   }
 }
 
