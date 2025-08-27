@@ -24,7 +24,15 @@ resource "aws_iam_role_policy" "firehose_delivery" {
       {
         Sid: "S3Access",
         Effect: "Allow",
-        Action: ["s3:AbortMultipartUpload","s3:GetBucketLocation","s3:GetObject","s3:ListBucket","s3:ListBucketMultipartUploads","s3:PutObject"],
+        Action: [
+          "s3:AbortMultipartUpload",
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads",
+          "s3:PutObject",
+          "s3:PutObjectAcl"
+        ],
         Resource: [var.logging_bucket_arn, "${var.logging_bucket_arn}/*"]
       },
       {
