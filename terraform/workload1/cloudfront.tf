@@ -104,7 +104,7 @@ resource "aws_cloudfront_realtime_log_config" "cf_realtime_logs" {
   endpoint {
     stream_type = "Kinesis"
     kinesis_stream_config {
-      role_arn   = aws_iam_role.firehose_delivery.arn
+      role_arn   = aws_iam_role.cloudfront_realtime_writer.arn
       stream_arn = aws_kinesis_stream.cloudfront_realtime.arn
     }
   }
