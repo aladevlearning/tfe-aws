@@ -34,10 +34,6 @@ output "cloudfront_realtime_kinesis_stream_arn" {
   value = aws_kinesis_stream.cloudfront_realtime.arn
 }
 
-output "cloudfront_kinesis_source_role_arn" {
-  value = aws_iam_role.firehose_source.arn
-}
-
 output "cloudfront_firehose_delivery_stream_arn" {
   value = aws_kinesis_firehose_delivery_stream.cloudfront_realtime_logs.arn
 }
