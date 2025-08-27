@@ -21,6 +21,12 @@ resource "aws_kinesis_firehose_delivery_stream" "cloudfront_realtime_logs" {
     compression_format = "GZIP"
     error_output_prefix = "firehose/cloudfront/!{firehose:error-output-type}/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/"
     prefix              = "firehose/cloudfront/year=!{timestamp:yyyy}/month=!{timestamp:MM}/day=!{timestamp:dd}/"
+
+    cloudwatch_logging_options {
+      enabled         = true
+      log_group_name  = "/aws/kinesisfirehose/cloudfront-realtime-logs-to-s3"
+      log_stream_name = "S3Delivery"
+    }
   }
 }
 
@@ -30,6 +36,10 @@ output "cloudfront_realtime_kinesis_stream_arn" {
 
 output "cloudfront_kinesis_source_role_arn" {
   value = aws_iam_role.firehose_source.arn
+}
+
+output "cloudfront_firehose_delivery_stream_arn" {
+  value = aws_kinesis_firehose_delivery_stream.cloudfront_realtime_logs.arn
 }
 
 
