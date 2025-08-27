@@ -5,7 +5,13 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.0"
-      configuration_aliases = [aws.workload1_euw1, aws.security_euw1, aws.security_use1]
+      configuration_aliases = [
+        aws.workload1_euw1, 
+        aws.workload1_use1,
+        aws.security_euw1, 
+        aws.security_use1,
+        aws.logging_use1
+      ]
     }
   }
 
@@ -23,7 +29,11 @@ module "workload1" {
 
   providers = {
     aws = aws.workload1_euw1
+    aws.aws_use1 = aws.workload1_use1
   }
+
+  logging_bucket_arn  = module.logging.logging_bucket_arn
+  logging_bucket_name = module.logging.logging_bucket_name
 }
 
 module "security" {
@@ -41,5 +51,10 @@ module "logging" {
 
   providers = {
     aws = aws.logging_euw1
+    aws.aws_use1 = aws.logging_use1
+    aws.workload1_use1 = aws.workload1_use1
   }
+
+  workload1_account_id = var.workload1_account_id
+  security_account_id  = var.security_account_id
 }
