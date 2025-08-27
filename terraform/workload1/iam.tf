@@ -34,9 +34,20 @@ resource "aws_iam_role_policy" "firehose_delivery" {
         Resource: aws_kinesis_stream.cloudfront_realtime.arn
       },
       {
-        Sid: "LogsForDiagnostics",
+        Sid: "LogsCreateGroupAndStream",
         Effect: "Allow",
-        Action: ["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],
+        Action: [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream"
+        ],
+        Resource: "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:*:log-group:/aws/kinesisfirehose/*"
+      },
+      {
+        Sid: "LogsPutEvents",
+        Effect: "Allow",
+        Action: [
+          "logs:PutLogEvents"
+        ],
         Resource: "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:*:log-group:/aws/kinesisfirehose/*:log-stream:*"
       }
     ]
