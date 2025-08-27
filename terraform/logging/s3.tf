@@ -32,9 +32,6 @@ resource "aws_s3_bucket_public_access_block" "logging" {
   restrict_public_buckets = true
 }
 
-# Allow cross-account Firehose delivery from workload/security accounts
-data "aws_caller_identity" "current" {}
-
 resource "aws_s3_bucket_policy" "allow_firehose_put" {
   bucket = aws_s3_bucket.logging.id
 
