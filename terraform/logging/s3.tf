@@ -47,9 +47,6 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
         Condition: {
           StringEquals: {
             "aws:SourceAccount": [var.workload1_account_id, var.security_account_id]
-          },
-          ArnLike: {
-            "aws:SourceArn": var.workload1_firehose_delivery_stream_arn
           }
         }
       }
