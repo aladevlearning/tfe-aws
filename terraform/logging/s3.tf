@@ -41,14 +41,17 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
       {
         Sid: "AllowFirehosePutFromOtherAccounts",
         Effect: "Allow",
-        Principal: { Service: "firehose.amazonaws.com" },
-        Action: ["s3:PutObject","s3:AbortMultipartUpload","s3:ListBucketMultipartUploads","s3:GetBucketLocation","s3:ListBucket"],
-        Resource: [aws_s3_bucket.logging.arn, "${aws_s3_bucket.logging.arn}/*"],
-        Condition: {
-          StringEquals: {
-            "aws:SourceAccount": [var.workload1_account_id, var.security_account_id]
-          }
-        }
+        Principal: { AWS: aws_iam_role.firehose_delivery.arn },
+        Action: [
+          "s3:AbortMultipartUpload",
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads",
+          "s3:PutObject",
+          "s3:PutObjectAcl"
+        ],
+        Resource: [aws_s3_bucket.logging.arn, "${aws_s3_bucket.logging.arn}/*"]
       }
     ]
   })
