@@ -135,7 +135,20 @@ resource "aws_s3_bucket_policy" "content_policy" {
   })
 }
 
+resource "aws_cloudwatch_log_delivery_source" "this" {
+  name         = "name"
+  log_type     = "ACCESS_LOGS"
+  resource_arn = aws_cloudfront_distribution.s3_distribution.arn
+}
+
+
 # Outputs
+
+output "aws_cloudwatch_log_delivery_source_name" {
+  description = "The ID of the CloudFront distribution"
+  value       = aws_cloudwatch_log_delivery_source.this.name
+}
+
 output "cloudfront_distribution_id" {
   description = "The ID of the CloudFront distribution"
   value       = aws_cloudfront_distribution.s3_distribution.id

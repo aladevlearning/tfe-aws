@@ -56,7 +56,7 @@ module "logging" {
     aws.workload1_use1 = aws.workload1_use1
   }
 
-  cloudfront_arn = module.workload1.cloudfront_distribution_arn
+  aws_cloudwatch_log_delivery_source_name = module.workload1.aws_cloudwatch_log_delivery_source_name
   workload1_account_id = var.workload1_account_id
   security_account_id  = var.security_account_id
   cloudfront_realtime_kinesis_stream_arn = module.workload1.cloudfront_realtime_kinesis_stream_arn

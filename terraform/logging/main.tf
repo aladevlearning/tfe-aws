@@ -38,14 +38,8 @@ module "real_time_logs_bucket" {
   }
 }
 
-resource "aws_cloudwatch_log_delivery_source" "this" {
-  name         = "name"
-  log_type     = "ACCESS_LOGS"
-  resource_arn = var.cloudfront_arn
-}
-
 resource "aws_cloudwatch_log_delivery" "this" {
-  delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
+  delivery_source_name     = var.aws_cloudwatch_log_delivery_source_name
   delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
 
   s3_delivery_configuration {
