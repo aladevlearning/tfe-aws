@@ -25,8 +25,6 @@ resource "aws_s3_bucket_ownership_controls" "this" {
 
 data "aws_canonical_user_id" "current" {}
 
-data "aws_canonical_user_id" "current" {}
-
 resource "aws_s3_bucket_acl" "example" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
 
