@@ -136,6 +136,7 @@ resource "aws_s3_bucket_policy" "content_policy" {
 }
 
 resource "aws_cloudwatch_log_delivery_source" "this" {
+  provider = aws.workload1_use1
   name         = "name"
   log_type     = "ACCESS_LOGS"
   resource_arn = aws_cloudfront_distribution.s3_distribution.arn
