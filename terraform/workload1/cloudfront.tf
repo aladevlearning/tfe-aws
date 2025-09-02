@@ -92,7 +92,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   # CloudFront access logs
   logging_config {
     include_cookies = false
-    bucket          = var.access_logs_bucket_arn
+    bucket          = var.access_logs_bucket_name
     prefix          = "cloudfront-access-logs/"
   }
 
