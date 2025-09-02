@@ -32,6 +32,8 @@ module "workload1" {
     aws.workload1_use1 = aws.workload1_use1
   }
 
+  access_logs_bucket_arn  = module.logging.access_logs_bucket_arn
+  access_logs_bucket_name  = module.logging.access_logs_bucket_name
   real_time_logs_bucket_arn  = module.logging.real_time_logs_bucket_arn
   real_time_logs_bucket_name  = module.logging.real_time_logs_bucket_name
 }
