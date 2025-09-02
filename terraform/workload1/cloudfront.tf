@@ -156,7 +156,7 @@ resource "aws_cloudwatch_log_delivery_destination" "s3" {
   output_format = "plain"
 
   delivery_destination_configuration {
-    destination_resource_arn = "${module.access_logs_bucket.bucket_arn}/CloudFrontLogs"
+    destination_resource_arn = "${var.access_logs_bucket_arn}/CloudFrontLogs"
   }
 }
 
