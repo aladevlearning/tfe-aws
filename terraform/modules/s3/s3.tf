@@ -56,6 +56,19 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
     ]
   })
 }
+data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
+
+# Bucket ACL for CloudFront logging
+resource "aws_s3_bucket_acl" "access_logs" {
+  depends_on = [aws_s3_bucket_ownership_controls.this]
+  bucket     = var.bucket_name
+
+  grant {
+    id         = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
+    permission = "FULL_CONTROL"
+    type       = "CanonicalUser"
+  }
+}
 
 # Optional: versioning
 resource "aws_s3_bucket_versioning" "this" {
