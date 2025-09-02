@@ -19,13 +19,8 @@ resource "aws_s3_bucket_ownership_controls" "this" {
   bucket = aws_s3_bucket.this.id
 
   rule {
-    object_ownership = "BucketOwnerPreferred"
+    object_ownership = "BucketOwnerEnforced"
   }
-}
-
-resource "aws_s3_bucket_acl" "cloudfront" {
-  bucket = aws_s3_bucket.this.id
-  acl    = "log-delivery-write"
 }
 
 # Block all public access
@@ -57,35 +52,10 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
           "s3:PutObjectAcl"
         ],
         Resource: [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"]
-      },
-      {
-        Sid: "AllowCloudFrontLogDeliveryObjects",
-        Effect: "Allow",
-        Principal: { Service: "delivery.logs.amazonaws.com" },
-        Action: [
-          "s3:PutObject"
-        ],
-        Resource: "${aws_s3_bucket.this.arn}/*",
-        Condition: {
-          StringEquals: {
-            "s3:x-amz-acl": "bucket-owner-full-control"
-          }
-        }
-      },
-      {
-        Sid: "AllowCloudFrontLogDeliveryBucket",
-        Effect: "Allow",
-        Principal: { Service: "delivery.logs.amazonaws.com" },
-        Action: [
-          "s3:GetBucketAcl",
-          "s3:PutBucketAcl"
-        ],
-        Resource: aws_s3_bucket.this.arn
       }
     ]
   })
 }
-
 
 # Optional: versioning
 resource "aws_s3_bucket_versioning" "this" {
