@@ -83,7 +83,7 @@ resource "aws_cloudwatch_log_delivery" "this" {
 
 resource "aws_cloudwatch_log_delivery_destination" "s3" {
   name          = "mydestination"
-  output_format = "raw"
+  output_format = "plain"
 
   delivery_destination_configuration {
     destination_resource_arn = aws_s3_bucket.this.arn
