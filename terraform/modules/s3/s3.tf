@@ -64,21 +64,8 @@ data "aws_s3_bucket" "this" {
 
 resource "aws_s3_bucket_acl" "this" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
-  bucket     = aws_s3_bucket.this.bucket
-
-  access_control_policy {
-    grant {
-      grantee {
-        id   = var.cloudfront_log_delivery_canonical_user_id
-        type = "CanonicalUser"
-      }
-      permission = "FULL_CONTROL"
-    }
-
-    owner {
-      id = data.aws_s3_bucket.this.bucket_domain_name
-    }
-  }
+  bucket     = aws_s3_bucket.this.id
+  acl        = "log-delivery-write"
 }
 
 # Optional: versioning
