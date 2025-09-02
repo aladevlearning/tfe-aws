@@ -54,20 +54,28 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
         Resource: [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"]
       },
       {
-        Sid : "AllowCloudFrontLogDelivery",
-        Effect : "Allow",
-        Principal : { Service : "delivery.logs.amazonaws.com" },
-        Action : [
-          "s3:PutObject",
+        Sid: "AllowCloudFrontLogDeliveryObjects",
+        Effect: "Allow",
+        Principal: { Service: "delivery.logs.amazonaws.com" },
+        Action: [
+          "s3:PutObject"
+        ],
+        Resource: "${aws_s3_bucket.this.arn}/*",
+        Condition: {
+          StringEquals: {
+            "s3:x-amz-acl": "bucket-owner-full-control"
+          }
+        }
+      },
+      {
+        Sid: "AllowCloudFrontLogDeliveryBucket",
+        Effect: "Allow",
+        Principal: { Service: "delivery.logs.amazonaws.com" },
+        Action: [
           "s3:GetBucketAcl",
           "s3:PutBucketAcl"
         ],
-        Resource : "${aws_s3_bucket.this.arn}/*",
-        Condition : {
-          StringEquals : {
-            "s3:x-amz-acl" : "bucket-owner-full-control"
-          }
-        }
+        Resource: aws_s3_bucket.this.arn
       }
     ]
   })
