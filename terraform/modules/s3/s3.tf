@@ -82,9 +82,6 @@ resource "aws_s3_bucket_acl" "this" {
       permission = "FULL_CONTROL"
     }
 
-    owner {
-      id = data.aws_s3_canonical_user_id.current.id
-    }
   }
 }
 
