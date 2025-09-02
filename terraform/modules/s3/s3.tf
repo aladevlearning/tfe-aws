@@ -74,7 +74,11 @@ resource "aws_cloudwatch_log_delivery_source" "this" {
 
 resource "aws_cloudwatch_log_delivery" "this" {
   delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
-  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.name
+  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
+
+  s3_delivery_configuration {
+    suffix_path = "/123456678910/{DistributionId}/{yyyy}/{MM}/{dd}/{HH}"
+  }
 }
 
 resource "aws_cloudwatch_log_delivery_destination" "s3" {
@@ -85,6 +89,7 @@ resource "aws_cloudwatch_log_delivery_destination" "s3" {
     destination_resource_arn = aws_s3_bucket.this.arn
   }
 }
+
 
 /*resource "aws_cloudwatch_log_delivery_destination_policy" "s3" {
   delivery_destination_name = aws_cloudwatch_log_delivery_destination.s3.name
