@@ -56,6 +56,7 @@ module "logging" {
     aws.workload1_use1 = aws.workload1_use1
   }
 
+  iam_role_arn = module.workload1.firehose_delivery_arn
   workload1_account_id = var.workload1_account_id
   security_account_id  = var.security_account_id
   cloudfront_realtime_kinesis_stream_arn = module.workload1.cloudfront_realtime_kinesis_stream_arn
