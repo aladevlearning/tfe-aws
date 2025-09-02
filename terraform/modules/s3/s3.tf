@@ -63,9 +63,9 @@ data "aws_s3_bucket" "this" {
   bucket = aws_s3_bucket.this.bucket
 }
 
-resource "aws_s3_bucket_acl" "access_logs" {
+resource "aws_s3_bucket_acl" "this" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
-  bucket     = aws_s3_bucket.this.id
+  bucket     = aws_s3_bucket.this.bucket
 
   access_control_policy {
     grant {
