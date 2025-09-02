@@ -57,5 +57,4 @@ module "logging" {
   }
 
   iam_role_arn = module.workload1.firehose_delivery_arn
-  real_time_logs_bucket_arn = module.logging.real_time_logs_bucket_arn
 }
