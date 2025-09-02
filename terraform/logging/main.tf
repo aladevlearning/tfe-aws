@@ -11,7 +11,7 @@ module "waf_logs_bucket" {
   bucket_name = "waf-logs"
   iam_role_arn = aws_iam_role.firehose_delivery.arn
   providers = {
-    aws = aws.logging_euw1
+    aws = aws
     aws.security_use1 = aws.security_use1
   }
 }
