@@ -25,6 +25,8 @@ resource "aws_s3_bucket_ownership_controls" "this" {
 
 data "aws_canonical_user_id" "current" {}
 
+data "aws_canonical_user_id" "current" {}
+
 resource "aws_s3_bucket_acl" "example" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
 
@@ -35,7 +37,7 @@ resource "aws_s3_bucket_acl" "example" {
         id   = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
         type = "CanonicalUser"
       }
-      permission = "READ"
+      permission = "FULL_CONTROL"
     }
 
     grant {
@@ -43,7 +45,11 @@ resource "aws_s3_bucket_acl" "example" {
         type = "Group"
         uri  = "http://acs.amazonaws.com/groups/s3/LogDelivery"
       }
-      permission = "READ_ACP"
+      permission = "FULL_CONTROL"
+    }
+
+    owner {
+      id = data.aws_canonical_user_id.current.id
     }
   }
 }
