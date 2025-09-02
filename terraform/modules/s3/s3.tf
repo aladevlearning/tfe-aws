@@ -59,6 +59,9 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
 
 # Data source for CloudFront logging
 data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
+data "aws_s3_bucket" "this" {
+  bucket = aws_s3_bucket.this.bucket
+}
 
 resource "aws_s3_bucket_acl" "access_logs" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
@@ -74,7 +77,7 @@ resource "aws_s3_bucket_acl" "access_logs" {
     }
 
     owner {
-      id = aws_s3_bucket.this.bucket_domain_name
+      id = data.aws_s3_bucket.this.bucket_domain_name
     }
   }
 }
