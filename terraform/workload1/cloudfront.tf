@@ -89,6 +89,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     ]
   }
 
+  # CloudFront access logs
+  logging_config {
+    include_cookies = false
+    bucket          = "${var.access_logs_bucket_name}.s3.amazonaws.com"
+    prefix          = "cloudfront-access-logs/"
+  }
+
   tags = {
     Name        = "CloudFront-${aws_s3_bucket.content.id}"
     Environment = "Dev"
@@ -135,48 +142,10 @@ resource "aws_s3_bucket_policy" "content_policy" {
   })
 }
 
-resource "aws_cloudwatch_log_delivery_source" "this" {
-  provider = aws.workload1_use1
-  name         = "name"
-  log_type     = "ACCESS_LOGS"
-  resource_arn = aws_cloudfront_distribution.s3_distribution.arn
-}
-
-resource "aws_cloudwatch_log_delivery" "this" {
-  provider = aws.workload1_use1
-  delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
-  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
-
-  s3_delivery_configuration {
-    suffix_path = "/Logs/{DistributionId}/{yyyy}/{MM}/{dd}/{HH}"
-  }
-}
-
-resource "aws_cloudwatch_log_delivery_destination" "s3" {
-  provider = aws.workload1_use1
-  name          = "mydestination-logs"
-  output_format = "plain"
-
-  delivery_destination_configuration {
-    destination_resource_arn = "${var.access_logs_bucket_arn}/CloudFrontLogs"
-  }
-}
-
 # Outputs
-
-output "aws_cloudwatch_log_delivery_source_name" {
-  description = "The ID of the CloudFront distribution"
-  value       = aws_cloudwatch_log_delivery_source.this.name
-}
-
 output "cloudfront_distribution_id" {
   description = "The ID of the CloudFront distribution"
   value       = aws_cloudfront_distribution.s3_distribution.id
-}
-
-output "cloudfront_distribution_arn" {
-  description = "The ARN of the CloudFront distribution"
-  value       = aws_cloudfront_distribution.s3_distribution.arn
 }
 
 output "cloudfront_distribution_domain_name" {
