@@ -24,5 +24,6 @@ variable "cloudfront_realtime_kinesis_shard_count" {
 
 variable "workload1_account_id" { type = string }
 variable "security_account_id" { type = string }
+variable "cloudfront_arn" { type = string }
 variable "real_time_logs_bucket_arn" { type = string }
 
