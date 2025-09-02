@@ -65,3 +65,28 @@ resource "aws_s3_bucket_versioning" "this" {
     status = "Enabled"
   }
 }
+
+resource "aws_cloudwatch_log_delivery_source" "this" {
+  name         = "name"
+  log_type     = "ACCESS_LOGS"
+  resource_arn = var.cloudfront_arn
+}
+
+resource "aws_cloudwatch_log_delivery" "this" {
+  delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
+  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.name
+}
+
+resource "aws_cloudwatch_log_delivery_destination" "s3" {
+  name          = "mydestination"
+  output_format = "raw"
+
+  delivery_destination_configuration {
+    destination_resource_arn = aws_s3_bucket.this.arn
+  }
+}
+
+/*resource "aws_cloudwatch_log_delivery_destination_policy" "s3" {
+  delivery_destination_name = aws_cloudwatch_log_delivery_destination.s3.name
+  delivery_destination_policy = data.aws_iam_policy_document.delivery_destination_policy.json
+}*/
