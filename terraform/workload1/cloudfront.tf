@@ -143,6 +143,7 @@ resource "aws_cloudwatch_log_delivery_source" "this" {
 }
 
 resource "aws_cloudwatch_log_delivery" "this" {
+  provider = aws.workload1_use1
   delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
   delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
 
@@ -152,6 +153,7 @@ resource "aws_cloudwatch_log_delivery" "this" {
 }
 
 resource "aws_cloudwatch_log_delivery_destination" "s3" {
+  provider = aws.workload1_use1
   name          = "mydestination-logs"
   output_format = "plain"
 
