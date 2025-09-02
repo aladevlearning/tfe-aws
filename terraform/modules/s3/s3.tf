@@ -32,7 +32,7 @@ resource "aws_s3_bucket_acl" "example" {
   access_control_policy {
     grant {
       grantee {
-        id   = data.aws_canonical_user_id.current.id
+        id   = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
         type = "CanonicalUser"
       }
       permission = "READ"
@@ -47,7 +47,7 @@ resource "aws_s3_bucket_acl" "example" {
     }
 
     owner {
-      id = data.aws_canonical_user_id.current.id
+      id = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
     }
   }
 }
