@@ -1,5 +1,5 @@
 # Firewall Manager Policy with simple, testable WAF rule
-
+/*
 resource "aws_fms_policy" "cloudfront_waf_policy" {
   provider = aws.security_use1
 
@@ -51,3 +51,5 @@ resource "aws_fms_policy" "cloudfront_waf_policy" {
   }
   exclude_resource_tags = false # False = All regardless of tag
 }
+
+ */
