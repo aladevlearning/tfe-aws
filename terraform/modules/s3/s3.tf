@@ -24,6 +24,7 @@ resource "aws_s3_bucket_ownership_controls" "this" {
 }
 
 data "aws_canonical_user_id" "current" {}
+data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
 
 resource "aws_s3_bucket_acl" "example" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
@@ -107,9 +108,3 @@ resource "aws_s3_bucket_versioning" "this" {
     status = "Enabled"
   }
 }
-
-
-/*resource "aws_cloudwatch_log_delivery_destination_policy" "s3" {
-  delivery_destination_name = aws_cloudwatch_log_delivery_destination.s3.name
-  delivery_destination_policy = data.aws_iam_policy_document.delivery_destination_policy.json
-}*/

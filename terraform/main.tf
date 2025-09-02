@@ -57,9 +57,5 @@ module "logging" {
   }
 
   iam_role_arn = module.workload1.firehose_delivery_arn
-  workload1_account_id = var.workload1_account_id
-  security_account_id  = var.security_account_id
-  cloudfront_realtime_kinesis_stream_arn = module.workload1.cloudfront_realtime_kinesis_stream_arn
-  workload1_firehose_delivery_stream_arn  = module.workload1.cloudfront_firehose_delivery_stream_arn
   real_time_logs_bucket_arn = module.logging.real_time_logs_bucket_arn
 }

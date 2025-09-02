@@ -6,8 +6,6 @@ terraform {
   }
 }
 
-data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
-
 module "waf_logs_bucket" {
   source       = "../modules/s3"
   bucket_name = "waf-logs"
