@@ -142,6 +142,23 @@ resource "aws_cloudwatch_log_delivery_source" "this" {
   resource_arn = aws_cloudfront_distribution.s3_distribution.arn
 }
 
+resource "aws_cloudwatch_log_delivery" "this" {
+  delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
+  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
+
+  s3_delivery_configuration {
+    suffix_path = "/Logs/{DistributionId}/{yyyy}/{MM}/{dd}/{HH}"
+  }
+}
+
+resource "aws_cloudwatch_log_delivery_destination" "s3" {
+  name          = "mydestination-logs"
+  output_format = "plain"
+
+  delivery_destination_configuration {
+    destination_resource_arn = "${module.access_logs_bucket.bucket_arn}/CloudFrontLogs"
+  }
+}
 
 # Outputs
 

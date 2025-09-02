@@ -37,21 +37,3 @@ module "real_time_logs_bucket" {
     aws = aws
   }
 }
-
-resource "aws_cloudwatch_log_delivery" "this" {
-  delivery_source_name     = var.aws_cloudwatch_log_delivery_source_name
-  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
-
-  s3_delivery_configuration {
-    suffix_path = "/Logs/{DistributionId}/{yyyy}/{MM}/{dd}/{HH}"
-  }
-}
-
-resource "aws_cloudwatch_log_delivery_destination" "s3" {
-  name          = "mydestination-logs"
-  output_format = "plain"
-
-  delivery_destination_configuration {
-    destination_resource_arn = "${module.access_logs_bucket.bucket_arn}/CloudFrontLogs"
-  }
-}
