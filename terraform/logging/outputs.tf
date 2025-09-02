@@ -1,11 +1,23 @@
-output "logging_bucket_name" {
-  value = aws_s3_bucket.logging.bucket
+output "access_logs_bucket_name" {
+  value = module.access_logs_bucket.bucket_name
 }
 
-output "logging_bucket_arn" {
-  value = aws_s3_bucket.logging.arn
+output "access_logs_bucket_arn" {
+  value = module.access_logs_bucket.bucket_arn
 }
 
-// No Firehose outputs by default; not needed for referencing from other modules
+output "real_time_logs_bucket_name" {
+  value = module.real_time_logs_bucket.bucket_name
+}
 
+output "real_time_logs_bucket_arn" {
+  value = module.real_time_logs_bucket.bucket_arn
+}
 
+output "waf_logs_bucket_name" {
+  value = module.waf_logs_bucket.bucket_name
+}
+
+output "waf_logs_bucket_arn" {
+  value = module.waf_logs_bucket.bucket_arn
+}

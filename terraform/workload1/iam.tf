@@ -33,7 +33,7 @@ resource "aws_iam_role_policy" "firehose_delivery" {
           "s3:PutObject",
           "s3:PutObjectAcl"
         ],
-        Resource: [var.logging_bucket_arn, "${var.logging_bucket_arn}/*"]
+        Resource: [var.real_time_logs_bucket_arn, "${var.real_time_logs_bucket_arn}/*"]
       },
       {
         Sid: "KinesisAccess",
