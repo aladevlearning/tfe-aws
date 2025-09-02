@@ -81,6 +81,19 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
           "s3:PutObjectAcl"
         ],
         Resource: [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"]
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": [
+            "arn:aws:iam::559672757117:root"
+          ]
+        },
+        "Action": [
+          "s3:GetBucketAcl",
+          "s3:PutBucketAcl"
+        ],
+        "Resource": aws_s3_bucket.this.arn
       }
     ]
   })
