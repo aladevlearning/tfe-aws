@@ -82,6 +82,9 @@ resource "aws_s3_bucket_acl" "this" {
       permission = "FULL_CONTROL"
     }
 
+    owner {
+      id = aws_s3_bucket.this.bucket_domain_name
+    }
   }
 }
 
