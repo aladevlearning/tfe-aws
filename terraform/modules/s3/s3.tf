@@ -66,30 +66,6 @@ resource "aws_s3_bucket_versioning" "this" {
   }
 }
 
-resource "aws_cloudwatch_log_delivery_source" "this" {
-  name         = "name"
-  log_type     = "ACCESS_LOGS"
-  resource_arn = var.cloudfront_arn
-}
-
-resource "aws_cloudwatch_log_delivery" "this" {
-  delivery_source_name     = aws_cloudwatch_log_delivery_source.this.name
-  delivery_destination_arn = aws_cloudwatch_log_delivery_destination.s3.arn
-
-  s3_delivery_configuration {
-    suffix_path = "/123456678910/{DistributionId}/{yyyy}/{MM}/{dd}/{HH}"
-  }
-}
-
-resource "aws_cloudwatch_log_delivery_destination" "s3" {
-  name          = "mydestination-logs"
-  output_format = "plain"
-
-  delivery_destination_configuration {
-    destination_resource_arn = "${aws_s3_bucket.this.arn}/CloudFrontLogs"
-  }
-}
-
 
 /*resource "aws_cloudwatch_log_delivery_destination_policy" "s3" {
   delivery_destination_name = aws_cloudwatch_log_delivery_destination.s3.name
