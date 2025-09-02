@@ -58,7 +58,6 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
 }
 
 # Data source for CloudFront logging
-data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
 data "aws_s3_bucket" "this" {
   bucket = aws_s3_bucket.this.bucket
 }
@@ -70,7 +69,7 @@ resource "aws_s3_bucket_acl" "this" {
   access_control_policy {
     grant {
       grantee {
-        id   = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
+        id   = var.cloudfront_log_delivery_canonical_user_id
         type = "CanonicalUser"
       }
       permission = "FULL_CONTROL"
