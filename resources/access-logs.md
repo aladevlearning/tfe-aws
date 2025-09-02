@@ -1,0 +1,35 @@
+| Field                         | Value                                                                    |
+|-------------------------------|--------------------------------------------------------------------------|
+| date                          | 2025-09-02                                                               |
+| time                          | 19:37:47                                                                 |
+| x-edge-location               | CPH50-P2                                                                 |
+| sc-bytes                      | 1485                                                                     |
+| c-ip                          | 122.165.xxx.yyy                                                          |
+| cs-method                     | GET                                                                      |
+| cs(Host)                      | dtqdylmp77qsu.cloudfront.net                                             |
+| cs-uri-stem                   | /                                                                        |
+| sc-status                     | 200                                                                      |
+| cs-Referer                    | -                                                                        |
+| cs-User-Agent                 | Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/139.0.0.0 Safari/537.36 |
+| cs-uri-query                  | -                                                                        |
+| cs-Cookie                     | -                                                                        |
+| x-edge-result-type             | Miss                                                                     |
+| x-edge-request-id              | 23F39JJsoc5nNZ0DxzeW1C3IBqwrToSdRY07Ft3FfAu01WOTOoYC8g==                 |
+| x-host-header                  | dsadylmp66qsu.cloudfront.net                                             |
+| cs-protocol                    | https                                                                    |
+| cs-bytes                       | 479                                                                      |
+| time-taken                     | 0.159                                                                    |
+| x-forwarded-for                | -                                                                        |
+| ssl-protocol                   | TLSv1.3                                                                  |
+| ssl-cipher                     | TLS_AES_128_GCM_SHA256                                                   |
+| x-edge-response-result-type    | Miss                                                                     |
+| cs-protocol-version            | HTTP/2.0                                                                 |
+| fle-status                     | -                                                                        |
+| fle-encrypted-fields           | -                                                                        |
+| c-port                         | 58484                                                                    |
+| time-to-first-byte             | 0.159                                                                    |
+| x-edge-detailed-result-type    | Miss                                                                     |
+| sc-content-type                | text/html                                                                |
+| sc-content-len                 | -                                                                        |
+| sc-range-start                 | -                                                                        |
+| sc-range-end                   | -                                                                        |
