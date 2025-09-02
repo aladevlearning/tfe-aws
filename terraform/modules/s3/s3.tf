@@ -56,17 +56,35 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
     ]
   })
 }
+
+# Data source for CloudFront logging
 data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
 
-# Bucket ACL for CloudFront logging
-resource "aws_s3_bucket_acl" "access_logs" {
+# Bucket ACL for CloudFront logging - CORRECTED SYNTAX
+resource "aws_s3_bucket_acl" "this" {
   depends_on = [aws_s3_bucket_ownership_controls.this]
   bucket     = var.bucket_name
 
-  grant {
-    id         = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
-    permission = "FULL_CONTROL"
-    type       = "CanonicalUser"
+  access_control_policy {
+    grant {
+      grantee {
+        id   = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
+        type = "CanonicalUser"
+      }
+      permission = "FULL_CONTROL"
+    }
+
+    grant {
+      grantee {
+        type = "Group"
+        uri  = "http://acs.amazonaws.com/groups/s3/BucketOwner"
+      }
+      permission = "FULL_CONTROL"
+    }
+
+    owner {
+      id = data.aws_s3_canonical_user_id.current.id
+    }
   }
 }
 
