@@ -1,5 +1,4 @@
 resource "aws_iam_role" "firehose_waf_delivery_role" {
-  provider = aws.source
   name = "firehose_waf_delivery_role"
 
   assume_role_policy = jsonencode({
@@ -18,7 +17,6 @@ resource "aws_iam_role" "firehose_waf_delivery_role" {
 
 
 resource "aws_iam_role_policy" "firehose_s3_policy" {
-  provider = aws.source
   name = "firehose_s3_policy"
   role = aws_iam_role.firehose_waf_delivery_role.id
 
