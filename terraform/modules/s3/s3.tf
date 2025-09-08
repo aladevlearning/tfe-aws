@@ -62,8 +62,12 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
+locals {
+  create_firehose_policy = var.iam_role_firehose_arn != null && var.iam_role_firehose_arn != ""
+}
+
 resource "aws_s3_bucket_policy" "allow_firehose_put" {
-  count  = var.iam_role_firehose_arn != null ? 1 : 0
+  count = local.create_firehose_policy ? 1 : 0
   bucket = aws_s3_bucket.this.id
 
   policy = jsonencode({
