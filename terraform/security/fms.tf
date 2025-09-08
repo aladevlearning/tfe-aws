@@ -1,5 +1,5 @@
 # Firewall Manager Policy with simple, testable WAF rule
-/*
+
 resource "aws_fms_policy" "cloudfront_waf_policy" {
   provider = aws.security_use1
 
@@ -22,6 +22,15 @@ resource "aws_fms_policy" "cloudfront_waf_policy" {
 
       defaultAction = {
         type = "ALLOW"
+      }
+
+      loggingConfiguration = {
+        logDestinationConfigs = [
+          aws_kinesis_firehose_delivery_stream.waf_logs.arn
+        ]
+        # Optional: Filter specific fields
+        redactedFields = []
+        managedByFirewallManager = true
       }
 
       overrideCustomerWebACLAssociation = false
@@ -52,4 +61,3 @@ resource "aws_fms_policy" "cloudfront_waf_policy" {
   exclude_resource_tags = false # False = All regardless of tag
 }
 
- */
