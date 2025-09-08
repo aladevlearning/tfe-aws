@@ -65,7 +65,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
 
 resource "aws_s3_bucket_policy" "allow_firehose_put" {
   count  = var.iam_role_firehose_arn != null ? 1 : 0
-  bucket = aws_s3_bucket.this.id
+  bucket = aws_s3_bucket.this.bucket
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -83,7 +83,10 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
           "s3:PutObject",
           "s3:PutObjectAcl"
         ],
-        Resource: [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"]
+        Resource: [
+          "arn:aws:s3:::${aws_s3_bucket.this.bucket}",
+          "arn:aws:s3:::${aws_s3_bucket.this.bucket}/*"
+        ]
       },
       {
         "Effect": "Allow",
