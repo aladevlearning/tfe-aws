@@ -46,6 +46,7 @@ module "security" {
     aws = aws.security_euw1
     aws.security_use1 = aws.security_use1
   }
+  waf_logs_bucket_arn = module.logging.waf_logs_bucket_arn
 }
 
 module "logging" {
@@ -56,5 +57,6 @@ module "logging" {
     aws.workload1_use1 = aws.workload1_use1
   }
 
-  iam_role_arn = module.workload1.firehose_delivery_arn
+  iam_role_real_time_firehose_arn = module.workload1.firehose_real_time_delivery_arn
+  iam_role_waf_firehose_arn       = module.security.firehose_waf_delivery_arn
 }

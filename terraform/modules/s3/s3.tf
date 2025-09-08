@@ -63,6 +63,7 @@ resource "aws_s3_bucket_public_access_block" "this" {
 }
 
 resource "aws_s3_bucket_policy" "allow_firehose_put" {
+  count  = var.iam_role_firehose_arn != null ? 1 : 0
   bucket = aws_s3_bucket.this.id
 
   policy = jsonencode({
@@ -71,7 +72,7 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
       {
         Sid: "AllowFirehosePutFromOtherAccounts",
         Effect: "Allow",
-        Principal: { AWS: var.iam_role_arn },
+        Principal: { AWS: var.iam_role_firehose_arn },
         Action: [
           "s3:AbortMultipartUpload",
           "s3:GetBucketLocation",
