@@ -18,6 +18,7 @@ module "waf_logs_bucket" {
 module "access_logs_bucket" {
   source       = "../modules/s3"
   bucket_name = "access-logs"
+  iam_role_firehose_arn = var.iam_role_real_time_firehose_arn
   providers = {
     aws = aws
   }

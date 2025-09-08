@@ -62,20 +62,17 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
-
 resource "aws_s3_bucket_policy" "allow_firehose_put" {
-  for_each = var.iam_role_firehose_arn != null ? { firehose = var.iam_role_firehose_arn } : {}
-
-  bucket = aws_s3_bucket.this.bucket
+  bucket = aws_s3_bucket.this.id
 
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Sid      = "AllowFirehosePutFromOtherAccounts"
-        Effect   = "Allow"
-        Principal = { AWS = each.value }
-        Action   = [
+        Sid: "AllowFirehosePutFromOtherAccounts",
+        Effect: "Allow",
+        Principal: { AWS: var.iam_role_firehose_arn },
+        Action: [
           "s3:AbortMultipartUpload",
           "s3:GetBucketLocation",
           "s3:GetObject",
@@ -83,11 +80,21 @@ resource "aws_s3_bucket_policy" "allow_firehose_put" {
           "s3:ListBucketMultipartUploads",
           "s3:PutObject",
           "s3:PutObjectAcl"
-        ]
-        Resource = [
-          "arn:aws:s3:::${aws_s3_bucket.this.bucket}",
-          "arn:aws:s3:::${aws_s3_bucket.this.bucket}/*"
-        ]
+        ],
+        Resource: [aws_s3_bucket.this.arn, "${aws_s3_bucket.this.arn}/*"]
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": [
+            "arn:aws:iam::559672757117:root"
+          ]
+        },
+        "Action": [
+          "s3:GetBucketAcl",
+          "s3:PutBucketAcl"
+        ],
+        "Resource": aws_s3_bucket.this.arn
       }
     ]
   })
