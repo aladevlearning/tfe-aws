@@ -1,4 +1,6 @@
 resource "aws_kinesis_firehose_delivery_stream" "waf_logs" {
+  provider = aws.security_use1
+
   name        = "firewall-manager-waf-logs-to-s3"
   destination = "extended_s3"
 
